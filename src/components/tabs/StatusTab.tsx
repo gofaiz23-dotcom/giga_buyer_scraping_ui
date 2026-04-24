@@ -114,16 +114,21 @@ export function StatusTab() {
 
   useEffect(() => {
     load();
-    const id = setInterval(load, REFRESH_MS);
-    return () => clearInterval(id);
   }, [load]);
 
   const tree = useMemo(() => (data ? groupTree(data) : []), [data]);
 
   const topStatus = data?.products?.status ?? "idle";
+  const isRunning = String(topStatus).toLowerCase() === "running";
   const hasAny =
     tree.length > 0 &&
     tree.some((p) => p.categories.length > 0);
+
+  useEffect(() => {
+    if (!isRunning) return;
+    const id = setInterval(load, REFRESH_MS);
+    return () => clearInterval(id);
+  }, [isRunning, load]);
 
   return (
     <div className="space-y-6">

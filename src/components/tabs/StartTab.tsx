@@ -45,8 +45,6 @@ export function StartTab() {
 
   useEffect(() => {
     load();
-    const id = setInterval(load, STATUS_REFRESH_MS);
-    return () => clearInterval(id);
   }, [load]);
 
   const onStart = useCallback(async () => {
@@ -66,6 +64,12 @@ export function StartTab() {
   const topStatus = status?.products?.status ?? "idle";
   const tone = statusTone(topStatus);
   const isRunning = String(topStatus).toLowerCase() === "running";
+
+  useEffect(() => {
+    if (!isRunning) return;
+    const id = setInterval(load, STATUS_REFRESH_MS);
+    return () => clearInterval(id);
+  }, [isRunning, load]);
 
   return (
     <div className="space-y-6">
