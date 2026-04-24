@@ -70,6 +70,7 @@ export interface BucketSubcategory {
   name: string;
   url: string;
   files: BucketFile[];
+  product_count_xlsx?: number;
 }
 
 export interface BucketCategory {
@@ -79,6 +80,7 @@ export interface BucketCategory {
   url: string;
   files: BucketFile[];
   subcategories: BucketSubcategory[];
+  product_count_xlsx?: number;
 }
 
 export interface BucketCounts {
@@ -87,6 +89,7 @@ export interface BucketCounts {
   subcategory_folders: number;
   total_folders: number;
   total_files: number;
+  total_products_xlsx?: number;
 }
 
 export interface BucketParentAssign {

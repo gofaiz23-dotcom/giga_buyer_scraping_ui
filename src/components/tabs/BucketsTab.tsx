@@ -173,7 +173,7 @@ export function BucketsTab() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         <StatTile
           label="Parent folders"
           value={counts?.parent_category_folders ?? 0}
@@ -197,6 +197,18 @@ export function BucketsTab() {
           value={counts?.total_files ?? 0}
           icon={<FileIcon />}
           tone="slate"
+        />
+        <StatTile
+          label="Folders"
+          value={counts?.total_folders ?? 0}
+          icon={<FolderIcon />}
+          tone="slate"
+        />
+        <StatTile
+          label="Products (XLSX)"
+          value={counts?.total_products_xlsx ?? 0}
+          icon={<TableIcon />}
+          tone="emerald"
         />
       </div>
 
@@ -377,6 +389,7 @@ function CategoryFolder({
             tone="accent"
           />
           <CountBadge count={allFilesCount} label="files" tone="slate" />
+          <CountBadge count={cat.product_count_xlsx ?? 0} label="products" tone="emerald" />
         </>
       }
       meta={
@@ -451,7 +464,12 @@ function SubcategoryFolder({
       defaultOpen
       icon={<FolderIcon />}
       label={sub.name}
-      badge={<CountBadge count={sub.files.length} label="files" tone="slate" />}
+      badge={
+        <>
+          <CountBadge count={sub.files.length} label="files" tone="slate" />
+          <CountBadge count={sub.product_count_xlsx ?? 0} label="products" tone="emerald" />
+        </>
+      }
       actions={
         <>
           {sub.url ? (
@@ -550,13 +568,15 @@ function CountBadge({
 }: {
   count: number;
   label: string;
-  tone: "brand" | "accent" | "slate";
+  tone: "brand" | "accent" | "slate" | "emerald";
 }) {
   const palette =
     tone === "brand"
       ? "bg-brand-500/15 text-brand-200 border-brand-400/30"
       : tone === "accent"
         ? "bg-accent-500/15 text-accent-400 border-accent-500/30"
+        : tone === "emerald"
+          ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
         : "bg-white/[0.05] text-slate-300 border-white/10";
   return (
     <span
