@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-ink-950 text-slate-100 antialiased;
+  background-image:
+    radial-gradient(
+      1000px 600px at 10% -10%,
+      rgba(59, 99, 255, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 100% 0%,
+      rgba(34, 211, 238, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #05070d 0%, #05070d 100%);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ---------------------------------------------------------------------------
+ * Light theme
+ *
+ * The app is dark-first. When <html> has the `.light` class the rules below
+ * override the most common dark utility classes so existing components stay
+ * untouched while rendering perfectly in light mode.
+ * ------------------------------------------------------------------------- */
+html.light body {
+  background-color: #f5f7fb;
+  color: #0f172a;
+  background-image:
+    radial-gradient(
+      1000px 600px at 10% -10%,
+      rgba(59, 99, 255, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 100% 0%,
+      rgba(6, 182, 212, 0.1),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #f5f7fb 0%, #f5f7fb 100%);
+}
+
+/* Subtle scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.25);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.45);
+  background-clip: padding-box;
+}
+html.light * {
+  scrollbar-color: rgba(15, 23, 42, 0.2) transparent;
+}
+html.light *::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.2);
+}
+html.light *::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(15, 23, 42, 0.35);
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] border border-white/[0.06] backdrop-blur-md;
+  }
+  .glass-strong {
+    @apply bg-white/[0.05] border border-white/[0.08] backdrop-blur-lg;
+  }
+  .card {
+    @apply glass rounded-2xl shadow-card;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl
+      px-4 py-2 text-sm font-medium
+      transition-all duration-150 ease-out
+      disabled:opacity-50 disabled:cursor-not-allowed
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/60;
+  }
+  .btn-primary {
+    @apply btn text-white
+      bg-gradient-to-r from-brand-500 to-accent-500
+      shadow-[0_10px_30px_-12px_rgba(59,99,255,0.55)]
+      hover:brightness-110 hover:shadow-[0_14px_40px_-12px_rgba(59,99,255,0.75)];
+  }
+  .btn-ghost {
+    @apply btn text-slate-200
+      bg-white/[0.04] border border-white/[0.06]
+      hover:bg-white/[0.08] hover:border-white/[0.12];
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border
+      px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide;
+  }
+  .kbd {
+    @apply rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5
+      text-[11px] text-slate-300;
+  }
+  .divider {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Light-mode utility overrides
+ *
+ * We intentionally override by selector rather than rewriting every component.
+ * This keeps existing dark-themed class names (`text-slate-200`, `bg-white/[0.04]`,
+ * `border-white/10`, `bg-ink-900`, …) working in both themes.
+ * --------------------------------------------------------------------------- */
+
+/* Text (white / slate-* used as primary text colors in dark theme) */
+html.light .text-white { color: #0f172a; }
+html.light .text-slate-100 { color: #0f172a; }
+html.light .text-slate-200 { color: #1e293b; }
+html.light .text-slate-300 { color: #334155; }
+html.light .text-slate-400 { color: #475569; }
+html.light .text-slate-500 { color: #64748b; }
+html.light .text-slate-600 { color: #94a3b8; }
+html.light .placeholder\:text-slate-500::placeholder { color: #94a3b8; }
+
+/* Ink backgrounds flip to near-white surfaces */
+html.light .bg-ink-950 { background-color: #f5f7fb; }
+html.light .bg-ink-900 { background-color: #ffffff; }
+html.light .bg-ink-800 { background-color: #f8fafc; }
+html.light .bg-ink-950\/70 { background-color: rgba(245, 247, 251, 0.8); }
+html.light .bg-ink-950\/60 { background-color: rgba(245, 247, 251, 0.7); }
+html.light .bg-ink-900\/90 { background-color: rgba(255, 255, 255, 0.92); }
+html.light .bg-ink-900\/95 { background-color: rgba(255, 255, 255, 0.96); }
+
+/* Glass / surface tints: invert white/alpha -> dark/alpha */
+html.light .bg-white\/\[0\.02\] { background-color: rgba(15, 23, 42, 0.03); }
+html.light .bg-white\/\[0\.03\] { background-color: rgba(15, 23, 42, 0.035); }
+html.light .bg-white\/\[0\.04\] { background-color: rgba(15, 23, 42, 0.045); }
+html.light .bg-white\/\[0\.05\] { background-color: rgba(15, 23, 42, 0.05); }
+html.light .bg-white\/\[0\.06\] { background-color: rgba(15, 23, 42, 0.06); }
+html.light .bg-white\/\[0\.08\] { background-color: rgba(15, 23, 42, 0.08); }
+html.light .bg-white\/\[0\.09\] { background-color: rgba(15, 23, 42, 0.09); }
+html.light .hover\:bg-white\/\[0\.04\]:hover { background-color: rgba(15, 23, 42, 0.045); }
+html.light .hover\:bg-white\/\[0\.05\]:hover { background-color: rgba(15, 23, 42, 0.05); }
+html.light .hover\:bg-white\/\[0\.06\]:hover { background-color: rgba(15, 23, 42, 0.06); }
+html.light .hover\:bg-white\/\[0\.08\]:hover { background-color: rgba(15, 23, 42, 0.08); }
+html.light .hover\:bg-white\/\[0\.09\]:hover { background-color: rgba(15, 23, 42, 0.09); }
+html.light .focus\:bg-white\/\[0\.05\]:focus { background-color: rgba(15, 23, 42, 0.05); }
+
+/* Borders: white/alpha -> dark/alpha */
+html.light .border-white\/5 { border-color: rgba(15, 23, 42, 0.08); }
+html.light .border-white\/10 { border-color: rgba(15, 23, 42, 0.1); }
+html.light .border-white\/15 { border-color: rgba(15, 23, 42, 0.14); }
+html.light .border-white\/\[0\.06\] { border-color: rgba(15, 23, 42, 0.08); }
+html.light .border-white\/\[0\.08\] { border-color: rgba(15, 23, 42, 0.1); }
+html.light .border-white\/\[0\.12\] { border-color: rgba(15, 23, 42, 0.13); }
+html.light .border-white\/\[0\.14\] { border-color: rgba(15, 23, 42, 0.15); }
+html.light .hover\:border-white\/\[0\.12\]:hover { border-color: rgba(15, 23, 42, 0.14); }
+html.light .hover\:border-white\/\[0\.14\]:hover { border-color: rgba(15, 23, 42, 0.16); }
+html.light .focus\:border-brand-400\/40:focus { border-color: rgba(96, 135, 255, 0.55); }
+
+/* Rings */
+html.light .ring-white\/5 { --tw-ring-color: rgba(15, 23, 42, 0.08); }
+html.light .ring-white\/10 { --tw-ring-color: rgba(15, 23, 42, 0.12); }
+
+/* Gradient "from/to" stops that reference white/alpha */
+html.light .from-white\/0 { --tw-gradient-from: rgba(15, 23, 42, 0) var(--tw-gradient-from-position); }
+html.light .via-white\/10 { --tw-gradient-stops: var(--tw-gradient-from), rgba(15, 23, 42, 0.12) var(--tw-gradient-via-position), var(--tw-gradient-to); }
+
+/* Pretty up component classes in light mode */
+html.light .glass {
+  background-color: rgba(15, 23, 42, 0.03);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+html.light .glass-strong {
+  background-color: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.1);
+}
+html.light .card {
+  box-shadow:
+    0 1px 0 rgba(15, 23, 42, 0.04) inset,
+    0 10px 30px -16px rgba(15, 23, 42, 0.18);
+}
+html.light .btn-ghost {
+  color: #1e293b;
+  background-color: rgba(15, 23, 42, 0.05);
+  border-color: rgba(15, 23, 42, 0.1);
+}
+html.light .btn-ghost:hover {
+  background-color: rgba(15, 23, 42, 0.09);
+  border-color: rgba(15, 23, 42, 0.16);
+}
+html.light .kbd {
+  color: #334155;
+  background-color: rgba(15, 23, 42, 0.05);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+html.light .divider {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(15, 23, 42, 0.12),
+    transparent
+  );
+}
+
+/* Status chips keep their own palettes, but the "idle" slate chip benefits
+ * from a bit more contrast on light surfaces. */
+html.light .bg-slate-500\/10 { background-color: rgba(100, 116, 139, 0.16); }
+html.light .text-slate-300.border-slate-500\/30 { color: #334155; }
+html.light .border-slate-500\/30 { border-color: rgba(100, 116, 139, 0.4); }
+
+/* Brand / accent chips are already vibrant; tighten them slightly on light bg */
+html.light .bg-brand-500\/15 { background-color: rgba(59, 99, 255, 0.12); }
+html.light .bg-accent-500\/15 { background-color: rgba(6, 182, 212, 0.12); }
+html.light .bg-emerald-500\/15 { background-color: rgba(16, 185, 129, 0.14); }
+html.light .bg-rose-500\/15 { background-color: rgba(244, 63, 94, 0.12); }
+html.light .text-brand-100, html.light .text-brand-200 { color: #1a2e83; }
+html.light .text-brand-300 { color: #1b38d1; }
+html.light .text-accent-400 { color: #0e7490; }
+html.light .text-emerald-200, html.light .text-emerald-100 { color: #065f46; }
+html.light .text-rose-200, html.light .text-rose-100 { color: #9f1239; }
+html.light .text-amber-300 { color: #b45309; }
+html.light .text-fuchsia-300 { color: #a21caf; }
+
+/* JSON modal background overrides (uses ink-* opacities) */
+html.light .bg-ink-950\/70.backdrop-blur-md { background-color: rgba(30, 41, 59, 0.35); }
+
+/* Grid background for hero */
+.bg-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    );
+  background-size: 36px 36px;
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 40%,
+    transparent 75%
+  );
+}
+html.light .bg-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.06) 1px,
+      transparent 1px
+    );
+}
+
+/* Shimmer skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+html.light .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.05) 0%,
+    rgba(15, 23, 42, 0.09) 50%,
+    rgba(15, 23, 42, 0.05) 100%
+  );
+  background-size: 200% 100%;
+}
