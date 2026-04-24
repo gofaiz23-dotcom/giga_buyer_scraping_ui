@@ -89,7 +89,8 @@ export interface BucketCounts {
   subcategory_folders: number;
   total_folders: number;
   total_files: number;
-  total_products_xlsx?: number;
+  category_total_products?: number;
+  subcategory_total_products?: number;
 }
 
 export interface BucketParentAssign {

@@ -205,8 +205,14 @@ export function BucketsTab() {
           tone="slate"
         />
         <StatTile
-          label="Products (XLSX)"
-          value={counts?.total_products_xlsx ?? 0}
+          label="Category totals products"
+          value={counts?.category_total_products ?? 0}
+          icon={<TableIcon />}
+          tone="emerald"
+        />
+        <StatTile
+          label="Subcategory totals products"
+          value={counts?.subcategory_total_products ?? 0}
           icon={<TableIcon />}
           tone="emerald"
         />
